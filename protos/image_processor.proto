@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package imageprocessor;
+
+service ImageProcessorService {
+  // Procesa una imagen enviada en base64 y retorna una URL pública
+  rpc ProcessImage (ImageRequest) returns (ImageResponse);
+}
+
+// Enumeración para estados del procesamiento
+enum ProcessStatus {
+  SUCCESS = 0;
+  FAILED = 1;
+  INVALID_INPUT = 2;
+  PROCESSING_ERROR = 3;
+  STORAGE_ERROR = 4;
+}
+
+// Mensaje para detalles de error
+message ErrorDetail {
+  string code = 1;          // Código de error específico
+  string message = 2;       // Mensaje legible para humanos
+  repeated string details = 3; // Información adicional opcional
+}
+
+// Mensaje de entrada
+message ImageRequest {
+  string image_base64 = 1;  // Imagen codificada en base64
+  string filename = 2;      // Nombre del archivo
+  string content_type = 3;  // image/png, image/jpeg, etc.
+}
+
+// Mensaje de salida
+message ImageResponse {
+  oneof result {
+    SuccessResponse success = 1;
+    ErrorResponse error = 2;
+  }
+}
+
+// Respuesta exitosa
+message SuccessResponse {
+  string image_url = 1;     // URL pública de la imagen procesada
+  string processing_time = 2; // Tiempo de procesamiento en ms
+}
+
+// Respuesta de error
+message ErrorResponse {
+  ProcessStatus status = 1; // Tipo de error
+  ErrorDetail error_detail = 2; // Detalles del error
+  string request_id = 3;    // ID para tracking del error
+}
