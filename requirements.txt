@@ -1,0 +1,8 @@
+grpcio==1.64.0
+grpcio-tools==1.64.0
+boto3
+PyJWT
+pytest
+moto
+black
+flake8
