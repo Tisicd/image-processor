@@ -3,8 +3,7 @@
 import grpc
 import warnings
 
-import image_processor_pb2 as image__processor__pb2
-
+from app.interfaces.grpc import image_processor_pb2 as image__processor__pb2
 GRPC_GENERATED_VERSION = '1.73.0'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
